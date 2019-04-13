@@ -1,0 +1,2 @@
+# gosecret
+Make Encryption Easier
