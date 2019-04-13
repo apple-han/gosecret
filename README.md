@@ -9,7 +9,7 @@
               github.com/wenzhenxi/gorsa
 
 ## Why do this?
-- 加密的种类很多, "github.com/wenzhenxi/gorsa"每次找都很麻烦.
+- 加密的种类很多, 每次找都很麻烦.
 - 非常常见的功能, 应该隐藏掉容易出错的细节.
 ## Fearture
 - 对称加密.
