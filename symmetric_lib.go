@@ -17,15 +17,15 @@ type SymmetricEncryption interface {
 }
 
 type DesOrAes struct {
-	origData   []byte  //初始的数据
-	key        []byte  // 加密的秘钥
-	cryptEd    []byte  // 被解密的数据
+	OrigData   []byte  //初始的数据
+	Key        []byte  // 加密的秘钥
+	CryptEd    []byte  // 被解密的数据
 }
 
 func (s DesOrAes) PKCS5UnPadding() []byte {
-	length := len(s.origData)
-	unPadding := int(s.origData[length-1])
-	return s.origData[:(length - unPadding)]
+	length := len(s.OrigData)
+	unPadding := int(s.OrigData[length-1])
+	return s.OrigData[:(length - unPadding)]
 }
 
 func (s DesOrAes) PKCS5Padding(cipherText []byte, blockSize int) []byte {
@@ -35,7 +35,7 @@ func (s DesOrAes) PKCS5Padding(cipherText []byte, blockSize int) []byte {
 }
 
 func (s DesOrAes) encrypt(key []byte) ([]byte, error) {
-	if len(s.origData) < 1 || len(key) < 1 {
+	if len(s.OrigData) < 1 || len(key) < 1 {
 		return nil, errors.New("wrong data or key")
 	}
 	block, err := des.NewCipher(key)
@@ -43,21 +43,21 @@ func (s DesOrAes) encrypt(key []byte) ([]byte, error) {
 		return nil, err
 	}
 	bs := block.BlockSize()
-	if len(s.origData)%bs != 0 {
+	if len(s.OrigData)%bs != 0 {
 		return nil, errors.New("wrong padding")
 	}
-	out := make([]byte, len(s.origData))
+	out := make([]byte, len(s.OrigData))
 	dst := out
-	for len(s.origData) > 0 {
-		block.Encrypt(dst, s.origData[:bs])
-		s.origData = s.origData[bs:]
+	for len(s.OrigData) > 0 {
+		block.Encrypt(dst, s.OrigData[:bs])
+		s.OrigData = s.OrigData[bs:]
 		dst = dst[bs:]
 	}
 	return out, nil
 }
 
 func (s DesOrAes) decrypt(key []byte) ([]byte, error) {
-	if len(s.cryptEd) < 1 || len(key) < 1 {
+	if len(s.CryptEd) < 1 || len(key) < 1 {
 		return nil, errors.New("wrong data or key")
 	}
 	block, err := des.NewCipher(key)
@@ -65,16 +65,16 @@ func (s DesOrAes) decrypt(key []byte) ([]byte, error) {
 		return nil, err
 	}
 
-	out := make([]byte, len(s.cryptEd))
+	out := make([]byte, len(s.CryptEd))
 	dst := out
 	bs := block.BlockSize()
-	if len(s.cryptEd)%bs != 0 {
+	if len(s.CryptEd)%bs != 0 {
 		return nil, errors.New("wrong cryptEd size")
 	}
 
-	for len(s.cryptEd) > 0 {
-		block.Decrypt(dst, s.cryptEd[:bs])
-		s.cryptEd = s.cryptEd[bs:]
+	for len(s.CryptEd) > 0 {
+		block.Decrypt(dst, s.CryptEd[:bs])
+		s.CryptEd = s.CryptEd[bs:]
 		dst = dst[bs:]
 	}
 	return out, nil
@@ -85,10 +85,10 @@ func (s DesOrAes) CbcEncrypt(key []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	s.origData = s.PKCS5Padding(s.origData, block.BlockSize())
+	s.OrigData = s.PKCS5Padding(s.OrigData, block.BlockSize())
 	blockMode := cipher.NewCBCEncrypter(block, key)
-	cryptEd := make([]byte, len(s.origData))
-	blockMode.CryptBlocks(cryptEd, s.origData)
+	cryptEd := make([]byte, len(s.OrigData))
+	blockMode.CryptBlocks(cryptEd, s.OrigData)
 	return cryptEd, nil
 }
 
@@ -98,8 +98,8 @@ func (s DesOrAes) CbcDecrypt(key []byte) ([]byte, error) {
 		return nil, err
 	}
 	blockMode := cipher.NewCBCDecrypter(block, key)
-	s.origData = make([]byte, len(s.cryptEd))
-	blockMode.CryptBlocks(s.origData, s.cryptEd)
+	s.OrigData = make([]byte, len(s.CryptEd))
+	blockMode.CryptBlocks(s.OrigData, s.CryptEd)
 	origData := s.PKCS5UnPadding()
 	return origData, nil
 }

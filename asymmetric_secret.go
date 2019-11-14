@@ -24,7 +24,7 @@ import (
 //PrivateSign 私钥加签
 func(r Rsa) PrivateSign() string {
 
-	if err := r.GenRsaKey(r.bits); err != nil {
+	if err := r.GenRsaKey(r.Bits); err != nil {
 		log.Fatal("密钥文件生成失败！", err)
 	}
 
@@ -50,11 +50,11 @@ func(r Rsa) PrivateSign() string {
 	}
 	result := ""
 	switch {
-	case r.genre == 1:
+	case r.Genre == 1:
 		result = r.md5(priKey)
-	case r.genre == 2:
+	case r.Genre == 2:
 		result = r.sha1(priKey)
-	case r.genre == 3:
+	case r.Genre == 3:
 		result = r.sha256(priKey)
 	}
 	return result
@@ -88,13 +88,13 @@ func(r Rsa) PublicCheckSign() error{
 	c := crypto.MD5
 	hash := md5.New()
 	switch {
-	case r.genre == 1:
+	case r.Genre == 1:
 		c = crypto.MD5
 		hash = md5.New()
-	case r.genre == 2:
+	case r.Genre == 2:
 		c = crypto.SHA1
 		hash = sha1.New()
-	case r.genre == 3:
+	case r.Genre == 3:
 		c = crypto.SHA256
 		hash = sha256.New()
 	}
@@ -109,7 +109,7 @@ func(r Rsa) PublicCheckSign() error{
 
 // applyPubEPriD 公钥加密 私钥解密
 func(r Rsa) PubEncrypt()(string, error){
-	if err := r.GenRsaKey(r.bits); err != nil {
+	if err := r.GenRsaKey(r.Bits); err != nil {
 		log.Fatal("密钥文件生成失败！", err)
 	}
 
@@ -145,7 +145,7 @@ func(r Rsa) PriDecrypt() (string, error) {
 
 // PubDecrypt 公钥解密 PriEncrypt 私钥加密
 func(r Rsa) PriEncrypt() (string,error) {
-	if err := r.GenRsaKey(r.bits); err != nil {
+	if err := r.GenRsaKey(r.Bits); err != nil {
 		log.Fatal("密钥文件生成失败！", err)
 	}
 

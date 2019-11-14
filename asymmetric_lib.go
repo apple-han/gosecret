@@ -17,8 +17,8 @@ import (
 type Rsa struct {
 	OriginData []byte // 初始数据
 	SignData   []byte // 等待验签的数据
-	genre      int    // 加密的类型
-	bits       int    // 秘钥的长度
+	Genre      int    // 加密的类型
+	Bits       int    // 秘钥的长度
 	DecryptData []byte // 解密的数据
 }
 

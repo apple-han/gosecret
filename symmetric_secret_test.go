@@ -7,8 +7,8 @@ import (
 
 func TestDesOrAes_AesEncrypt(t *testing.T) {
 	d := DesOrAes{
-		origData: []byte("hello world"),
-		key     : []byte("smkldospdosldaaa"),
+		OrigData: []byte("hello world"),
+		Key     : []byte("smkldospdosldaaa"),
 	}
 	contents,err := d.AesEncrypt()
 	c := base64.StdEncoding.EncodeToString(contents)
@@ -22,11 +22,11 @@ func TestDesOrAes_AesEncrypt(t *testing.T) {
 
 func TestDesOrAes_AesDecrypt(t *testing.T) {
 	d := DesOrAes{
-		cryptEd: []byte("2kka6xb8T2uMf7Uj+BNISQ=="),
-		key     : []byte("smkldospdosldaaa"),
+		CryptEd: []byte("2kka6xb8T2uMf7Uj+BNISQ=="),
+		Key     : []byte("smkldospdosldaaa"),
 	}
-	r, err := base64.StdEncoding.DecodeString(string(d.cryptEd))
-	d.cryptEd = r
+	r, err := base64.StdEncoding.DecodeString(string(d.CryptEd))
+	d.CryptEd = r
 	contents,err := d.AesDecrypt()
 	const result = "hello world"
 
@@ -38,8 +38,8 @@ func TestDesOrAes_AesDecrypt(t *testing.T) {
 
 func TestDesOrAes_CbcDesEncrypt(t *testing.T) {
 	d := DesOrAes{
-		origData: []byte("hello world"),
-		key     : []byte("123456789012345678901234"),
+		OrigData: []byte("hello world"),
+		Key     : []byte("123456789012345678901234"),
 	}
 	contents,err := d.CbcDesEncrypt()
 	c := base64.StdEncoding.EncodeToString(contents)
@@ -52,11 +52,11 @@ func TestDesOrAes_CbcDesEncrypt(t *testing.T) {
 
 func TestDesOrAes_CbcDesDecrypt(t *testing.T) {
 	d := DesOrAes{
-		cryptEd: []byte("WJ+EfR2QSeRw87h8u1yGbw=="),
-		key     : []byte("123456789012345678901234"),
+		CryptEd: []byte("WJ+EfR2QSeRw87h8u1yGbw=="),
+		Key     : []byte("123456789012345678901234"),
 	}
-	r, err := base64.StdEncoding.DecodeString(string(d.cryptEd))
-	d.cryptEd = r
+	r, err := base64.StdEncoding.DecodeString(string(d.CryptEd))
+	d.CryptEd = r
 	contents,err := d.CbcDesDecrypt()
 	const result = "hello world"
 	if err != nil{
@@ -67,8 +67,8 @@ func TestDesOrAes_CbcDesDecrypt(t *testing.T) {
 
 func TestDesOrAes_EcbDesEncrypt(t *testing.T) {
 	d := DesOrAes{
-		origData: []byte("hello world"),
-		key     : []byte("123456789012345678901234"),
+		OrigData: []byte("hello world"),
+		Key     : []byte("123456789012345678901234"),
 	}
 	contents,err := d.EcbDesEncrypt()
 	c := base64.StdEncoding.EncodeToString(contents)
@@ -81,11 +81,11 @@ func TestDesOrAes_EcbDesEncrypt(t *testing.T) {
 
 func TestDesOrAes_EcbDesDecrypt(t *testing.T) {
 	d := DesOrAes{
-		cryptEd: []byte("SdHQCpbVRzk4JSGbnhUMLg=="),
-		key     : []byte("123456789012345678901234"),
+		CryptEd: []byte("SdHQCpbVRzk4JSGbnhUMLg=="),
+		Key     : []byte("123456789012345678901234"),
 	}
-	r, err := base64.StdEncoding.DecodeString(string(d.cryptEd))
-	d.cryptEd = r
+	r, err := base64.StdEncoding.DecodeString(string(d.CryptEd))
+	d.CryptEd = r
 	contents,err := d.EcbDesDecrypt()
 
 	const result = "hello world"

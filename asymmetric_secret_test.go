@@ -5,8 +5,8 @@ import "testing"
 func TestRsa_PrivateSign(t *testing.T) {
 	r := Rsa{
 		OriginData:[]byte("hello world"),
-		genre: 1,
-		bits:  512,
+		Genre: 1,
+		Bits:  512,
 	}
 	content := r.PrivateSign()
 	const result = "CatZb56l9kxmYY5AyBHtz8UP2USfT85gaC/Ky/fBD6a2uXYDshgYkNvUDQQPuOFCGFJhvUvAB8e6bbnN1Uxekw=="
@@ -19,7 +19,7 @@ func TestRsa_PrivateSign(t *testing.T) {
 func TestRsa_PublicCheckSign(t *testing.T) {
 	r := Rsa{
 		SignData:[]byte("CatZb56l9kxmYY5AyBHtz8UP2USfT85gaC/Ky/fBD6a2uXYDshgYkNvUDQQPuOFCGFJhvUvAB8e6bbnN1Uxekw=="),
-		genre: 1,
+		Genre: 1,
 	}
 	err := r.PublicCheckSign()
 	if err != nil{
@@ -30,7 +30,7 @@ func TestRsa_PublicCheckSign(t *testing.T) {
 func TestRsa_PubEncrypt(t *testing.T) {
 	r := Rsa{
 		OriginData:[]byte("hello world"),
-		bits:  512,
+		Bits:  512,
 
 	}
 	content, err := r.PubEncrypt()
@@ -47,7 +47,7 @@ func TestRsa_PubEncrypt(t *testing.T) {
 func TestRsa_PriDecrypt(t *testing.T) {
 	r := Rsa{
 		DecryptData:[]byte("glD1f9uLvV4c2UOk7OX1leB+mhmRYjedDbN0OmTOZ6/sfRTeidY0YEByFUUhcJRtl0DFhiVsCIVrUkD3CzO9Vg=="),
-		bits:  512,
+		Bits:  512,
 	}
 
 	content, err := r.PriDecrypt()
@@ -64,7 +64,7 @@ func TestRsa_PriDecrypt(t *testing.T) {
 func TestRsa_PriEncrypt(t *testing.T) {
 	r := Rsa{
 		OriginData:[]byte("hello world"),
-		bits:  512,
+		Bits:  512,
 
 	}
 	content, err := r.PriEncrypt()
@@ -81,7 +81,7 @@ func TestRsa_PriEncrypt(t *testing.T) {
 func TestRsa_PubDecrypt(t *testing.T) {
 	r := Rsa{
 		DecryptData:[]byte("pAWY90YLlNk7etWIlYUUV351DAI76Rt3SEYrqb4pInzD35fbrQC8wPncZXm4vJ3ReBPj8GYbHHDUYyUxHfNbpw=="),
-		bits:  512,
+		Bits:  512,
 	}
 
 	content, err := r.PubDecrypt()
