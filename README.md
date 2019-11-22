@@ -32,15 +32,15 @@ contents,err := d.AesDecrypt()
 
 // des cbc 加密
 d := DesOrAes{
-	origData: []byte("hello world"),
-	key     : []byte("123456789012345678901234"),
+	OrigData: []byte("hello world"),
+	Key     : []byte("123456789012345678901234"),
 }
 contents,err := d.CbcDesEncrypt()
 
 // des cbc 解密
 d := DesOrAes{
-	cryptEd: []byte("WJ+EfR2QSeRw87h8u1yGbw=="),
-	key     : []byte("123456789012345678901234"),
+	CryptEd: []byte("WJ+EfR2QSeRw87h8u1yGbw=="),
+	Key     : []byte("123456789012345678901234"),
 }
 r, err := base64.StdEncoding.DecodeString(string(d.cryptEd))
 d.cryptEd = r
@@ -48,15 +48,15 @@ contents,err := d.CbcDesDecrypt()
 
 // des ecb 加密
 d := DesOrAes{
-	origData: []byte("hello world"),
-	key     : []byte("123456789012345678901234"),
+	OrigData: []byte("hello world"),
+	Key     : []byte("123456789012345678901234"),
 }
 contents,err := d.EcbDesEncrypt()
 
 // des ecb 解密
 d := DesOrAes{
-	cryptEd: []byte("SdHQCpbVRzk4JSGbnhUMLg=="),
-	key     : []byte("123456789012345678901234"),
+	CryptEd: []byte("SdHQCpbVRzk4JSGbnhUMLg=="),
+	Key     : []byte("123456789012345678901234"),
 }
 r, err := base64.StdEncoding.DecodeString(string(d.cryptEd))
 d.cryptEd = r
@@ -67,15 +67,15 @@ contents,err := d.EcbDesDecrypt()
 // 私钥加签
 r := Rsa{
 	OriginData:[]byte("hello world"), // 需要加签的数据
-	genre: 1,                         // 加签的类型(1:md5 2:sha1 3:sha356)
-	bits:  512,                       // 生成秘钥的长度(512, 1024, 等)
+	Genre: 1,                         // 加签的类型(1:md5 2:sha1 3:sha356)
+	Bits:  512,                       // 生成秘钥的长度(512, 1024, 等)
 }
 content := r.PrivateSign()
 
 // 公钥验签
 r := Rsa{
 	SignData:[]byte() // 已经被加签的数据
-	genre: 1,         // 加签的类型(1:md5 2:sha1 3:sha356)
+	Genre: 1,         // 加签的类型(1:md5 2:sha1 3:sha356)
 }
 err := r.PublicCheckSign()  // err 为nil 说明验签成功
 
@@ -83,28 +83,28 @@ err := r.PublicCheckSign()  // err 为nil 说明验签成功
 // 公钥加密
 r := Rsa{
 	OriginData:[]byte("hello world"),
-	bits:  512,
+	Bits:  512,
 }
 content, err := r.PubEncrypt()
 
 // 私钥解密
 r := Rsa{
 	DecryptData:[]byte(), // 已经被加密的数据
-	bits:  512,
+	Bits:  512,
 }
 content, err := r.PriDecrypt()
 
 // 私钥加密
 r := Rsa{
 	OriginData:[]byte("hello world"),
-	bits:  512,
+	Bits:  512,
 }
 content, err := r.PriEncrypt()
 
 // 公钥解密
 r := Rsa{
 	DecryptData:[]byte(), // 已经被加密的数据
-	bits:  512,
+	Bits:  512,
 }
 content, err := r.PubDecrypt()
 ```
